@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('subject_id');
+            $table->unsignedTinyInteger('grade');
+            $table->timestamp('graded_at')->useCurrent();
         });
     }
 
