@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\SessionController;
+
+Route::get('/', function () { return view('index'); });
+
+Route::post("/login", [SessionController::class, "store"]);
+Route::get("/login", [SessionController::class, "create"]);
