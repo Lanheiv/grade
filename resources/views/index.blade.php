@@ -1,8 +1,6 @@
 <x-layout>
-
     <div>
-        <h1>Esiet sveicināti E-Klasē 2.0</h1>
-        <a href="login">ieiet savā kontā</a>
+        <h1>Esiet sveicināti {{ Auth::user()->first_name }}</h1>
+        <h3>Jūs esat {{ Auth::user()->admin }} admin</h3>
     </div>
-
 </x-layout>
