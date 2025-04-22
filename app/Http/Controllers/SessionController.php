@@ -16,15 +16,10 @@ class SessionController extends Controller
     public function store(Request $request) {
         $validated = $request->validate([
             "first_name" => ["required"],
-            "password" => ["required", Password::min(6)->numbers()->letters()]
+            "password" => ["required", Password::min(4)->numbers()->letters()]
         ]);
 
-        if (!Auth::attempt($validated)) { // Izment kļūdu ja savienojums neizdevās
-            throw ValidationException::withMessages([
-                "first_name" => "Jūsu vārs ir uzrakstīts nepareizi",
-                "password" => "Jūsu parole nav uzrakstīta pareizi"
-            ]); 
-        }
+        Auth::attempt($validated);
 
         $request->session()->regenerate();
         return redirect("/");

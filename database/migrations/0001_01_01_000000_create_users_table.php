@@ -34,13 +34,23 @@ return new class extends Migration
             $table->integer('last_activity')->index();
         });
 
-        DB::table('users')->insert([ // izveido testa adminu
-            'first_name' => 'test',
-            'last_name' => 'test',
-            'admin' => true,
-            'password' => Hash::make('test1234'),
-            'created_at' => now(),
-            'updated_at' => now(),
+        DB::table('users')->insert([ // izveido testa adminu un skolēnu
+            [
+                'first_name' => 'admin',
+                'last_name' => 'admin',
+                'admin' => true,
+                'password' => Hash::make('admin1'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'first_name' => 'user',
+                'last_name' => 'user',
+                'admin' => false,
+                'password' => Hash::make('user1'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
         ]);
     }
 

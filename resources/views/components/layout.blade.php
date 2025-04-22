@@ -7,6 +7,7 @@
         <title>{{ $title ?? "E-Klase" }}</title>
     </head>
     <body>
+
         {{ $slot }}
     </body>
 </html>
