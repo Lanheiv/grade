@@ -20,7 +20,7 @@
             </label>
 
             <label>
-                Uzvārds: 
+                Parole: 
                 <input type="password" name="password" require>
             </label>
 

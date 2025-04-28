@@ -13,7 +13,8 @@ Route::get('/', function () {
         return view('welcome');
     }
 });
-Route::delete("/{grade}", [GradesController::class, "destroy"])->middleware("auth");
+Route::delete("/{grade}", [GradesController::class, "destroy"]);
+Route::get("/grade", [GradesController::class, "create"]);
 
 
 Route::post("/create", [AccountController::class, "store"]);
@@ -33,7 +34,5 @@ Route::post("/logout", [SessionController::class, "destroy"])->name('logout');
 
         2. Vārds: user
         Parole: user1
-
-    Viss tas ir arī users migrācijā.
 */
 
