@@ -4,10 +4,18 @@
     </x-slot:title>
 
     <div>
+        <h1>Rediģēt kontu.</h1>
+
+        @if ($errors->any())
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        @endif
+
         <form method="POST" action="/edit">
             @csrf
-
-            <h1>Rediģēt kontu.</h1>
 
             <label>
                 Vārds:
@@ -21,7 +29,8 @@
 
             <label>
                 Parole:
-                <input type="text" name="password" require>
+                <input type="password" name="password">
+                <input name="password_confirmation" type="password">
             </label>
 
             <button>Saglabāt</button>

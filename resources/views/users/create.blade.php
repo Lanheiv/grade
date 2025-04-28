@@ -6,6 +6,14 @@
     <div>
         <h1>Izveidot kontu</h1>
 
+        @if ($errors->any())
+            <ul>
+                @foreach($errors as $err)
+                    <li>{{ $err }}</li>
+                @endforeach
+            </ul>
+        @endif
+
         <form method="POST" action="/create">
             @csrf
 
