@@ -1,9 +1,31 @@
 <x-layout>
     <x-slot:title>
-        Saraksts
+        Atdzīmes saraksts
     </x-slot:title>
 
-    <div>
-        <h1>Esiet sveicināti {{ Auth::user()->first_name }}</h1>
-    </div>
+        <h1>Atdzīmes saraksts</h1>
+    <table>
+        <tr>
+            <th>Students</th>
+            <th>Priekšmets</th>
+            <th>Atdzīme</th>
+            <th>Darbība</th>
+        </tr>
+        <tr>
+            @foreach ($grades as $grade)
+                <td>{{ $grade->student->first_name }} {{ $grade->student->last_name }}</td>
+                <td>{{ $grade->subject->subject_name }}</td>
+                <td>{{ $grade->grade }}</td>
+                
+                <td>
+                    <form method="POST" action="/{{ $grade->id }}">
+                        @csrf
+                        @method('DELETE')
+
+                        <button>Dzēst</button>
+                    </form>
+                </td>
+            @endforeach
+        </tr>
+    </table>
 </x-layout>

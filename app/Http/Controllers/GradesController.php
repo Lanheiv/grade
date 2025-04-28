@@ -10,14 +10,14 @@ class GradesController extends Controller
     {
         $grades = Grades::with(['student', 'subject'])->get();
 
-        return view('grades', compact('grades'));
+        return view('index', compact('grades'));
     }
 
     public function destroy(Grades $grade) {
 
         $grade->delete();
         
-        return redirect("/grades");
+        return redirect("/");
         
     }
 }

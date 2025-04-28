@@ -1,12 +1,20 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use Illuminate\Container\Attributes\Auth;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\GradesController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\AccountController;
 
-Route::get('/', function () { return Auth::check() ? view('index') : view('welcome'); });
+Route::get('/', function () {
+    if (Auth::check()) {
+        return app(GradesController::class)->index();
+    } else {
+        return view('welcome');
+    }
+});
+Route::delete("/{grade}", [GradesController::class, "destroy"])->middleware("auth");
+
 
 Route::post("/create", [AccountController::class, "store"]);
 Route::get("/create", [AccountController::class, "create"]);
@@ -17,9 +25,6 @@ Route::get("/edit", [AccountController::class, "edit"]);
 Route::get("/login", [SessionController::class, "create"])->name('login');
 Route::post("/login", [SessionController::class, "store"]);
 Route::post("/logout", [SessionController::class, "destroy"])->name('logout');
-
-Route::get("/grades", [GradesController::class, "index"]);
-Route::delete("/grades/{grade}", [GradesController::class, "destroy"]);
 
 /*
     Papildus info: Pēc migrācijas tiek izveidoti divi konti kurus var izmantot lai testētu. vienam ir admin rule bet otram nav
