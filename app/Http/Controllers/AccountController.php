@@ -10,13 +10,13 @@ use Illuminate\Validation\ValidationException;
 
 class AccountController extends Controller
 {
-    function view() {
+    public function view() {
         return view("users.view");
     }
-    function create() {
+    public function create() {
         return view("users.create");
     }
-    function store(Request $request) {
+    public function store(Request $request) {
         $validated = $request->validate([
             "first_name"=> ["required", "string", "max:25"],
             "last_name"=> ["required", "string", "max:25"],
@@ -27,10 +27,10 @@ class AccountController extends Controller
 
         return redirect("/");
     }
-    function edit() {
+    public function edit() {
         return view("users.edit");
     }
-    function update(Request $request) {
+    public function update(Request $request) {
         $user = auth()->user();
 
         $validate = $request->validate([

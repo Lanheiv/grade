@@ -8,11 +8,11 @@ use App\Models\Subject;
 
 class SubjectController extends Controller
 {
-    function create() {
+    public function create() {
 
         return view("subject.create");
     }
-    function store(Request $request) {
+    public function store(Request $request) {
         $validated = $request->validate([
             "subject_name"=> ["required", "string", "max:25"]
         ]);

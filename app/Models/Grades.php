@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Grades extends Model
 {
+    public $timestamps = false;
+    
     public function student()
     {
         return $this->belongsTo(User::class, 'student_id');
@@ -15,4 +17,10 @@ class Grades extends Model
     {
         return $this->belongsTo(Subject::class, 'subject_id');
     }
+
+    protected $fillable = [
+        'student_id',
+        'subject_id',
+        'grade',
+    ];
 }

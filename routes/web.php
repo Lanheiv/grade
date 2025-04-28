@@ -16,6 +16,7 @@ Route::get('/', function () {
     }
 });
 Route::delete("/{grade}", [GradesController::class, "destroy"]);
+Route::post("/grade", [GradesController::class, "store"]);
 Route::get("/grade", [GradesController::class, "create"]);
 
 Route::post("/create", [AccountController::class, "store"]);
