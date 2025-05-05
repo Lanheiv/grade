@@ -15,22 +15,26 @@ Route::get('/', function () {
         return view('welcome');
     }
 });
-Route::delete("/{grade}", [GradesController::class, "destroy"]);
-Route::post("/grade", [GradesController::class, "store"]);
-Route::get("/grade", [GradesController::class, "create"]);
+Route::middleware(['admin_check'])->group(function () {
+    Route::delete("/{grade}", [GradesController::class, "destroy"]);
+    Route::post("/grade", [GradesController::class, "store"]);
+    Route::get("/grade", [GradesController::class, "create"]);
 
-Route::post("/create", [AccountController::class, "store"]);
-Route::get("/create", [AccountController::class, "create"]);
-Route::get("/account", [AccountController::class, "view"]);
-Route::post("/edit", [AccountController::class, "update"]);
-Route::get("/edit", [AccountController::class, "edit"]);
+    Route::post("/create", [AccountController::class, "store"]);
+    Route::get("/create", [AccountController::class, "create"]);
 
-Route::get("/login", [SessionController::class, "create"])->name('login');
-Route::post("/login", [SessionController::class, "store"]);
-Route::post("/logout", [SessionController::class, "destroy"])->name('logout');
+    Route::post("/subject", [SubjectController::class, "store"]);
+    Route::get("/subject", [SubjectController::class, "create"]);
+});
+Route::middleware(['login_check'])->group(function () {
+    Route::get("/account", [AccountController::class, "view"]);
+    Route::post("/edit", [AccountController::class, "update"]);
+    Route::get("/edit", [AccountController::class, "edit"]);
 
-Route::post("/subject", [SubjectController::class, "store"]);
-Route::get("/subject", [SubjectController::class, "create"]);
+    Route::get("/login", [SessionController::class, "create"])->name('login');
+    Route::post("/login", [SessionController::class, "store"]);
+    Route::post("/logout", [SessionController::class, "destroy"])->name('logout');
+});
 
 /*
     Papildus info: Pēc migrācijas tiek izveidoti divi konti kurus var izmantot lai testētu. vienam ir admin rule bet otram nav

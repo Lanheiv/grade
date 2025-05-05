@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class AdminCheck
+class LoginCheck
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class AdminCheck
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->admin) {
+        if (Auth::check()) {
             return $next($request);
         }
 
