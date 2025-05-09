@@ -30,11 +30,11 @@ Route::middleware(['login_check'])->group(function () {
     Route::get("/account", [AccountController::class, "view"]);
     Route::post("/edit", [AccountController::class, "update"]);
     Route::get("/edit", [AccountController::class, "edit"]);
-
-    Route::get("/login", [SessionController::class, "create"])->name('login');
-    Route::post("/login", [SessionController::class, "store"]);
-    Route::post("/logout", [SessionController::class, "destroy"])->name('logout');
 });
+
+Route::get("/login", [SessionController::class, "create"])->name('login');
+Route::post("/login", [SessionController::class, "store"]);
+Route::post("/logout", [SessionController::class, "destroy"])->name('logout');
 
 /*
     Papildus info: Pēc migrācijas tiek izveidoti divi konti kurus var izmantot lai testētu. vienam ir admin rule bet otram nav
