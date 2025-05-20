@@ -10,26 +10,31 @@ use App\Http\Controllers\SubjectController;
 
 Route::get('/', function () {
     if (Auth::check()) {
-        return app(GradesController::class)->index();
+        return app(GradesController::class)->index(request());
     } else {
         return view('welcome');
     }
 });
 Route::middleware(['admin_check'])->group(function () {
-    Route::delete("/{grade}", [GradesController::class, "destroy"]);
-    Route::post("/grade", [GradesController::class, "store"]);
-    Route::get("/grade", [GradesController::class, "create"]);
+    Route::get('/grade', [GradesController::class, "create"]);
+    Route::post('/grade', [GradesController::class, "store"]);
+    Route::get('/grade/{grade}/edit', [GradesController::class, 'edit']);
+    Route::put('/grade/{grade}', [GradesController::class, 'update']); 
+    Route::delete('/{grade}', [GradesController::class, "destroy"]);
 
     Route::post("/create", [AccountController::class, "store"]);
     Route::get("/create", [AccountController::class, "create"]);
 
     Route::post("/subject", [SubjectController::class, "store"]);
     Route::get("/subject", [SubjectController::class, "create"]);
+
+
 });
 Route::middleware(['login_check'])->group(function () {
     Route::get("/account", [AccountController::class, "view"]);
     Route::post("/edit", [AccountController::class, "update"]);
     Route::get("/edit", [AccountController::class, "edit"]);
+    
 });
 
 Route::get("/login", [SessionController::class, "create"])->name('login');
