@@ -19,8 +19,8 @@ class AccountController extends Controller
     }
     public function store(Request $request) {
         $validated = $request->validate([
-            "first_name"=> ["required", "string", "max:25"],
-            "last_name"=> ["required", "string", "max:25"],
+            'first_name' => ['required', 'string', 'max:25', 'regex:/^[\p{L}\s]+$/u'],
+            'last_name' => ['required', 'string', 'max:25', 'regex:/^[\p{L}\s]+$/u'],
             "password"=> ["required", Password::min(4)->numbers()->letters()]
         ]);
 
@@ -34,10 +34,10 @@ class AccountController extends Controller
     public function update(Request $request) {
         $user = auth()->user();
 
-        $validate = $request->validate([
-            "first_name"=> ["required", "string", "max:25"],
-            "last_name"=> ["required", "string", "max:25"],
-            "password"=> ["nullable", "confirmed", Password::min(4)->numbers()->letters()]
+        $validated = $request->validate([
+            'first_name' => ['required', 'string', 'max:25', 'regex:/^[\p{L}\s]+$/u'],
+            'last_name' => ['required', 'string', 'max:25', 'regex:/^[\p{L}\s]+$/u'],
+            "password"=> ["required", "confirmed", Password::min(4)->numbers()->letters()]
         ]);
 
         $user->first_name = $validate["first_name"];

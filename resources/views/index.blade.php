@@ -7,6 +7,7 @@
 
         <div class="filter-section">
         <form method="GET" action="/">
+        @if (Auth::check() && Auth::user()->admin)
             <select name="student_id">
                 <option value="">Visi studenti</option>
                 @foreach($students as $student)
@@ -15,6 +16,7 @@
                     </option>
                 @endforeach
             </select>
+        @endif
 
             <select name="subject_id">
                 <option value="">Visi priekšmeti</option>
@@ -41,37 +43,46 @@
 
     <table>
         <tr>
-            <th>Students</th>
+            @if(Auth::check() && Auth::user()->admin)
+                <th>Students</th>
+            @endif
             <th>Priekšmets</th>
             <th>Atzīme</th>
             @if(Auth::check() && Auth::user()->admin)<th>Darbība</th>@endif
         </tr>
-       
-            @foreach ($grades as $grade)
-             <tr>
-                <td>{{ $grade->student->first_name }} {{ $grade->student->last_name }}</td>
-                <td>{{ $grade->subject->subject_name }}</td>
-                <td>{{ $grade->grade }}</td>
-                
             @if(Auth::check() && Auth::user()->admin)
-                <td>
-                    <form method="POST" action="/{{ $grade->id }}">
-                        @csrf
-                        @method('DELETE')
+                @foreach ($grades as $grade)
+                    <tr>
+                        <td>{{ $grade->student->first_name }} {{ $grade->student->last_name }}</td>
+                        <td>{{ $grade->subject->subject_name }}</td>
+                        <td>{{ $grade->grade }}</td>
+                        
+                        <td>
+                            <form method="POST" action="/{{ $grade->id }}">
+                                @csrf
+                                @method('DELETE')
 
-                        <button>Dzēst</button>
-                    </form>
+                                <button>Dzēst</button>
+                            </form>
 
-                    <form method="GET" action="/grade/{{ $grade->id }}/edit">
-                        @csrf
+                            <form method="GET" action="/grade/{{ $grade->id }}/edit">
+                                @csrf
 
-                        <button>Rediģēt</button>
-                    </form>
-                </td>
+                                <button>Rediģēt</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
             @endif
-            
-            </tr>
-            @endforeach
-        
+            @if(Auth::check() && !Auth::user()->admin)
+                @foreach ($grades as $grade)
+                    @if ($grade->student_id === auth()->id())
+                    <tr>
+                        <td>{{ $grade->subject->subject_name }}</td>
+                        <td>{{ $grade->grade }}</td>
+                    </tr>
+                    @endif
+                @endforeach
+            @endif
     </table>
 </x-layout>
