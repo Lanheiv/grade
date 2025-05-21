@@ -68,7 +68,7 @@ class AccountController extends Controller
         $user->profile_image = $filename;
         $user->save();
 
-        return back()->with('success', 'Profile image updated.');
+        return back()->with('success');
     }
     public function delete()
     {
@@ -80,6 +80,6 @@ class AccountController extends Controller
             $user->save();
         }
 
-        return back()->with('success', 'Profile image deleted.');
+        return back()->with('success');
     }
 }

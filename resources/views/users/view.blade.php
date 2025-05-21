@@ -22,13 +22,13 @@
                 <input type="file" name="profile_image" accept="image/*" required>
                 <button type="submit">Pievienot</button>
             </form>
-            <form action="{{ route('profile.image.delete') }}" method="POST">
-                @csrf
-                <button type="submit">Delete Profile Image</button>
-            </form>
-            
             @if(auth()->user()->profile_image)
                 <img src="{{ asset('storage/profile_pics/' . auth()->user()->profile_image) }}" alt="Profile Picture" width="150">
+
+                <form action="{{ route('profile.image.delete') }}" method="POST">
+                    @csrf
+                    <button type="submit">Delete Profile Image</button>
+                </form>
             @else
                 <p>Nav bildes</p>
             @endif
