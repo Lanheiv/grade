@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Storage;
 
 class AccountController extends Controller
 {
@@ -49,5 +50,36 @@ class AccountController extends Controller
         $user->save();
 
         return redirect("/account"); 
+    }
+
+    /* Bildes sadaļa */
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $file = $request->file('profile_image');
+        $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+
+        $file->storeAs('profile_pics', $filename, 'public');
+
+        $user = auth()->user(); // or User::find($id);
+        $user->profile_image = $filename;
+        $user->save();
+
+        return back()->with('success', 'Profile image updated.');
+    }
+    public function delete()
+    {
+        $user = auth()->user();
+
+        if ($user->profile_image && Storage::disk('public')->exists('profile_pics/' . $user->profile_image)) {
+            Storage::disk('public')->delete('profile_pics/' . $user->profile_image);
+            $user->profile_image = null;
+            $user->save();
+        }
+
+        return back()->with('success', 'Profile image deleted.');
     }
 }

@@ -34,7 +34,9 @@ Route::middleware(['login_check'])->group(function () {
     Route::get("/account", [AccountController::class, "view"]);
     Route::post("/edit", [AccountController::class, "update"]);
     Route::get("/edit", [AccountController::class, "edit"]);
-    
+
+    Route::post('/delete-profile-image', [AccountController::class, 'delete'])->name('profile.image.delete');
+    Route::post('/upload-profile', [AccountController::class, 'upload'])->name('profile.upload');
 });
 
 Route::get("/login", [SessionController::class, "create"])->name('login');
